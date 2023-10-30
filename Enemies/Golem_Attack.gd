@@ -11,7 +11,7 @@ func start():
 	$Timer.start()
 
 func physics_process(_delta):
-	pass
+	enemy.set_animation("Attacking")
 
 
 func _on_Timer_timeout():
