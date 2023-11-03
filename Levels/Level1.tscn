@@ -1,13 +1,28 @@
-[gd_scene load_steps=13 format=3 uid="uid://d32g6ub2xg53j"]
+[gd_scene load_steps=17 format=3 uid="uid://d32g6ub2xg53j"]
 
 [ext_resource type="Texture2D" uid="uid://b4xj5v3v4jr3x" path="res://Assets/background.png" id="1_3v4e4"]
 [ext_resource type="Script" path="res://StateMachine/Player_Container.gd" id="2_euynd"]
+[ext_resource type="Texture2D" uid="uid://dns4q4vcqducb" path="res://Assets/Eddies.png" id="3_aa8em"]
 [ext_resource type="PackedScene" uid="uid://cye7bc32e7aer" path="res://Enemies/Golem.tscn" id="3_hpoy1"]
+[ext_resource type="Script" path="res://Player/Coins.gd" id="4_k0eng"]
 [ext_resource type="PackedScene" uid="uid://cqwfa5aslniok" path="res://Enemies/Wolf.tscn" id="4_t4l0q"]
 [ext_resource type="PackedScene" uid="uid://c3tf31w2kdtx1" path="res://Enemies/Bat.tscn" id="5_ao4dh"]
 [ext_resource type="Script" path="res://Camera.gd" id="6_m8fvj"]
 [ext_resource type="Texture2D" uid="uid://desq04sivahhu" path="res://Assets/Tiles.png" id="7_aj4hs"]
 [ext_resource type="Script" path="res://Levels/Exit.gd" id="8_8t8s5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ee62h"]
+texture = ExtResource("3_aa8em")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSet" id="TileSet_527y6"]
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 8
+sources/0 = SubResource("TileSetAtlasSource_ee62h")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0umk"]
 size = Vector2(249.25, 191.625)
@@ -62,6 +77,12 @@ offset_top = -3408.0
 offset_right = 10156.0
 offset_bottom = 3265.0
 texture = ExtResource("1_3v4e4")
+
+[node name="Coins" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_527y6")
+format = 2
+layer_0/tile_data = PackedInt32Array(3276878, 0, 0, 2490457, 0, 0, 3670121, 0, 0, 3342499, 0, 0, 4522240, 0, 0, 4522221, 0, 0, 4456614, 0, 0, 2687258, 0, 0, -655092, 0, 0, -3407653, 0, 0, -4456273, 0, 0)
+script = ExtResource("4_k0eng")
 
 [node name="Exit_to_2" type="Area2D" parent="."]
 script = ExtResource("8_8t8s5")
@@ -119,5 +140,29 @@ offset_top = -1474.0
 offset_right = 2750.0
 offset_bottom = -1283.0
 color = Color(0.266667, 0.537255, 0.886275, 0.360784)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="UI/HUD"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 40.0
+color = Color(0.772549, 0, 0.776471, 0.572549)
+
+[node name="Coins" type="Label" parent="UI/HUD"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 5.0
+offset_right = 80.0
+offset_bottom = 31.0
+text = "Eddies: 0
+"
+vertical_alignment = 2
 
 [connection signal="body_entered" from="Exit_to_2" to="Exit_to_2" method="_on_Exit_body_entered"]
